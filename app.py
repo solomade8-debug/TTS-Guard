@@ -196,7 +196,16 @@ LOGO_PATH = os.path.join(os.path.dirname(__file__), "assets", "logo.png")
 
 with st.sidebar:
     if os.path.exists(LOGO_PATH):
-        st.image(LOGO_PATH, width=200)
+        import base64
+        with open(LOGO_PATH, "rb") as f:
+            logo_b64 = base64.b64encode(f.read()).decode()
+        st.markdown(
+            f'<div style="background-color: #012f5d; padding: 16px 20px; '
+            f'border-radius: 10px; text-align: center; margin-bottom: 8px;">'
+            f'<img src="data:image/png;base64,{logo_b64}" width="180" />'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
     else:
         st.markdown(
             '<h2 style="color: #012f5d; font-family: Roboto, sans-serif; '

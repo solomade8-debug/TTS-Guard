@@ -10,13 +10,28 @@ import os
 
 DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tts_guard.db")
 
+_db_initialized = False
+
 
 def get_connection():
     """Return a sqlite3 connection with Row factory for dict-like access."""
+    global _db_initialized
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON")
+    if not _db_initialized:
+        # Set flag first to prevent recursion (init_db also calls get_connection)
+        _db_initialized = True
+        _ensure_tables_exist()
     return conn
+
+
+def _ensure_tables_exist():
+    """Auto-create tables and seed if DB is empty (handles direct page navigation)."""
+    init_db()
+    if not has_data():
+        from seed_data import seed
+        seed()
 
 
 def init_db():

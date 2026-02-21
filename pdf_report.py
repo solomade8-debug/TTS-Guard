@@ -20,15 +20,19 @@ class InspectionReport(FPDF):
         self.client_name = client_name
 
     def header(self):
-        # Fire red header bar
-        self.set_fill_color(211, 47, 47)  # #D32F2F
+        # TTS navy header bar
+        self.set_fill_color(1, 47, 93)  # #012f5d
         self.rect(0, 0, 210, 12, "F")
+
+        # Orange accent stripe
+        self.set_fill_color(255, 102, 0)  # #ff6600
+        self.rect(0, 12, 210, 1.5, "F")
 
         # Logo or text fallback
         if os.path.exists(LOGO_PATH):
             try:
-                self.image(LOGO_PATH, 10, 15, 30)
-                x_start = 45
+                self.image(LOGO_PATH, 10, 16, 35)
+                x_start = 50
             except Exception:
                 x_start = 10
         else:
@@ -38,21 +42,21 @@ class InspectionReport(FPDF):
         self.set_y(16)
         self.set_x(x_start)
         self.set_font("Helvetica", "B", 16)
-        self.set_text_color(211, 47, 47)
+        self.set_text_color(1, 47, 93)  # #012f5d
         self.cell(0, 8, "Talent Technical Services", ln=True)
         self.set_x(x_start)
         self.set_font("Helvetica", "", 9)
-        self.set_text_color(100, 100, 100)
+        self.set_text_color(119, 119, 119)  # #777777
         self.cell(0, 5, "Fire Safety AMC Management  |  Abu Dhabi, UAE  |  +971 2 66 78340", ln=True)
 
         # Report title
         self.ln(4)
         self.set_font("Helvetica", "B", 14)
-        self.set_text_color(33, 33, 33)
+        self.set_text_color(34, 34, 34)  # #222222
         self.cell(0, 8, "FIRE SAFETY INSPECTION REPORT", ln=True, align="C")
 
         # Orange accent line
-        self.set_draw_color(255, 111, 0)  # #FF6F00
+        self.set_draw_color(255, 102, 0)  # #ff6600
         self.set_line_width(0.8)
         self.line(10, self.get_y() + 2, 200, self.get_y() + 2)
         self.ln(6)
@@ -81,10 +85,10 @@ class InspectionReport(FPDF):
     def add_section_header(self, title):
         """Add a colored section header."""
         self.set_font("Helvetica", "B", 11)
-        self.set_fill_color(250, 250, 250)
-        self.set_text_color(211, 47, 47)
+        self.set_fill_color(248, 248, 250)  # #f8f8fa
+        self.set_text_color(1, 47, 93)  # #012f5d
         self.cell(0, 8, f"  {title}", ln=True, fill=True)
-        self.set_text_color(33, 33, 33)
+        self.set_text_color(34, 34, 34)  # #222222
         self.ln(2)
 
     def add_key_value(self, key, value, bold_value=False):
@@ -97,12 +101,12 @@ class InspectionReport(FPDF):
     def add_table_header(self, headers, widths):
         """Add a table header row."""
         self.set_font("Helvetica", "B", 8)
-        self.set_fill_color(211, 47, 47)
+        self.set_fill_color(1, 47, 93)  # #012f5d
         self.set_text_color(255, 255, 255)
         for header, width in zip(headers, widths):
             self.cell(width, 7, f" {header}", border=1, fill=True)
         self.ln()
-        self.set_text_color(33, 33, 33)
+        self.set_text_color(34, 34, 34)
 
     def add_table_row(self, values, widths, fill=False):
         """Add a table data row."""
@@ -169,7 +173,7 @@ def generate_inspection_pdf(
     pdf.set_text_color(0, 200, 83)  # green
     pdf.cell(col_w, 12, str(items_passed), align="C")
     # Failed
-    pdf.set_text_color(211, 47, 47)  # red
+    pdf.set_text_color(230, 0, 0)  # #e60000
     pdf.cell(col_w, 12, str(items_failed), align="C")
     pdf.ln()
 
@@ -194,7 +198,7 @@ def generate_inspection_pdf(
     elif pass_rate >= 70:
         pdf.set_fill_color(255, 165, 0)
     else:
-        pdf.set_fill_color(211, 47, 47)
+        pdf.set_fill_color(230, 0, 0)  # #e60000
     pdf.rect(15, pdf.get_y(), bar_width * pass_rate / 100, 6, "F")
     pdf.set_font("Helvetica", "B", 8)
     pdf.set_text_color(33, 33, 33)

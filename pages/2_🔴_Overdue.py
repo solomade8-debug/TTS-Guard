@@ -25,7 +25,7 @@ if overdue_count == 0:
     st.stop()
 
 st.markdown(
-    f'<p style="font-size: 1.1rem; color: #FF4B4B; font-weight: 600;">'
+    f'<p style="font-size: 1.1rem; color: #e60000; font-weight: 600;">'
     f"⚠️ {overdue_count} building{'s' if overdue_count > 1 else ''} "
     f"with overdue inspections</p>",
     unsafe_allow_html=True,

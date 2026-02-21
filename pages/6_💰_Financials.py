@@ -99,7 +99,7 @@ monthly_rev = get_monthly_revenue(6)
 if len(monthly_rev) > 0:
     chart_data = monthly_rev.set_index("month")
     chart_data.columns = ["Amount (AED)"]
-    st.bar_chart(chart_data, color="#D32F2F")
+    st.bar_chart(chart_data, color="#ff6600")
 else:
     st.info("No payment data available for chart.")
 

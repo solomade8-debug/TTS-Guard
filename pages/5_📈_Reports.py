@@ -88,7 +88,7 @@ with chart_left:
             .reset_index(name="Inspections")
         )
         by_client = by_client.set_index("client_name")
-        st.bar_chart(by_client, color="#D32F2F")
+        st.bar_chart(by_client, color="#012f5d")
     else:
         st.info(f"No inspections recorded for {label}.")
 
@@ -105,7 +105,7 @@ with chart_right:
         by_priority["order"] = by_priority["priority"].map(priority_order)
         by_priority = by_priority.sort_values("order").drop(columns=["order"])
         by_priority = by_priority.set_index("priority")
-        st.bar_chart(by_priority, color="#FF6F00")
+        st.bar_chart(by_priority, color="#ff6600")
     else:
         st.info(f"No complaints recorded for {label}.")
 

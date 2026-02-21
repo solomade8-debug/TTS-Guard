@@ -20,24 +20,40 @@ st.set_page_config(
 )
 
 # ---------------------------------------------------------------------------
-# FIRE GRADIENT CSS THEME
+# TTS BRAND CSS THEME (matching ttsuae.com)
 # ---------------------------------------------------------------------------
 st.markdown("""
 <style>
-    /* Fire gradient header accent */
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;600&display=swap');
+
+    /* Global typography */
+    html, body, [class*="css"] {
+        font-family: 'Open Sans', sans-serif;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Roboto', sans-serif !important;
+    }
+
+    /* Top header bar — TTS navy + orange stripe */
     .stApp > header {
-        background: linear-gradient(90deg, #D32F2F, #FF6F00) !important;
+        background: linear-gradient(90deg, #012f5d, #012f5d 70%, #ff6600) !important;
     }
 
     /* Metric card styling */
     [data-testid="stMetricValue"] {
         font-size: 1.8rem;
         font-weight: 700;
+        font-family: 'Roboto', sans-serif !important;
+        color: #012f5d !important;
+    }
+    [data-testid="stMetricLabel"] {
+        color: #777777 !important;
     }
 
     /* Sidebar branding */
     [data-testid="stSidebar"] {
-        background-color: #FAFAFA;
+        background-color: #f8f8fa;
+        border-right: 1px solid #e5e5e5;
     }
 
     /* Dataframe styling */
@@ -45,71 +61,123 @@ st.markdown("""
         border-radius: 8px;
     }
 
-    /* Custom metric card borders */
+    /* Custom metric card borders — navy left accent */
     div[data-testid="stMetric"] {
         background-color: #ffffff;
-        border: 1px solid #e0e0e0;
-        border-left: 4px solid #D32F2F;
+        border: 1px solid #e5e5e5;
+        border-left: 4px solid #012f5d;
         padding: 12px 16px;
         border-radius: 8px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        box-shadow: 0px 2px 10px rgba(0,0,0,0.05);
     }
 
-    /* Section headers */
+    /* Section headers — TTS navy to orange gradient */
     .fire-header {
-        background: linear-gradient(90deg, #D32F2F, #FF6F00);
+        background: linear-gradient(90deg, #012f5d, #ff6600);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         font-weight: 700;
+        font-family: 'Roboto', sans-serif !important;
     }
 
     /* Status colors */
-    .status-overdue { color: #FF4B4B; font-weight: 600; }
-    .status-due-soon { color: #FFA500; font-weight: 600; }
+    .status-overdue { color: #e60000; font-weight: 600; }
+    .status-due-soon { color: #ff6600; font-weight: 600; }
     .status-ok { color: #00C853; font-weight: 600; }
 
-    /* Welcome page hero */
+    /* Welcome page hero stat cards */
     .hero-stat {
         text-align: center;
         padding: 20px;
         background: white;
-        border-radius: 12px;
-        border: 1px solid #e0e0e0;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        border-radius: 10px;
+        border: 1px solid #e5e5e5;
+        box-shadow: 0px 5px 20px #ebebeb;
+        transition: all 0.3s ease;
+    }
+    .hero-stat:hover {
+        box-shadow: 0px 5px 20px rgba(1,47,93,0.12);
+        border-color: #012f5d;
     }
     .hero-stat h2 {
-        color: #D32F2F;
+        color: #012f5d;
         margin: 0;
         font-size: 2.2rem;
+        font-family: 'Roboto', sans-serif !important;
     }
     .hero-stat p {
-        color: #666;
+        color: #777777;
         margin: 4px 0 0 0;
         font-size: 0.9rem;
     }
 
     /* Navigation cards */
     .nav-card {
-        padding: 16px;
+        padding: 18px;
         background: white;
         border-radius: 10px;
-        border: 1px solid #e0e0e0;
+        border: 1px solid #e5e5e5;
         text-align: center;
-        transition: all 0.2s;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        transition: all 0.3s ease;
+        box-shadow: 0px 2px 10px rgba(0,0,0,0.04);
     }
     .nav-card:hover {
-        border-color: #D32F2F;
-        box-shadow: 0 4px 12px rgba(211,47,47,0.1);
+        border-color: #ff6600;
+        box-shadow: 0 4px 15px rgba(255,102,0,0.12);
+        transform: translateY(-2px);
     }
     .nav-card h3 {
         margin: 8px 0 4px 0;
         font-size: 1rem;
+        color: #012f5d;
+        font-family: 'Roboto', sans-serif !important;
     }
     .nav-card p {
-        color: #888;
+        color: #777777;
         font-size: 0.8rem;
         margin: 0;
+    }
+
+    /* Buttons — TTS orange */
+    .stButton > button {
+        border-color: #ff6600;
+        color: #ff6600;
+        transition: all 0.3s ease;
+    }
+    .stButton > button:hover {
+        background-color: #ff6600;
+        color: white;
+        border-color: #ff6600;
+    }
+
+    /* Progress bar — orange fill */
+    .stProgress > div > div > div {
+        background-color: #ff6600 !important;
+    }
+
+    /* Expander headers */
+    .streamlit-expanderHeader {
+        font-family: 'Roboto', sans-serif !important;
+        color: #012f5d !important;
+    }
+
+    /* Tab styling */
+    .stTabs [data-baseweb="tab-list"] button[aria-selected="true"] {
+        color: #012f5d !important;
+        border-bottom-color: #ff6600 !important;
+    }
+
+    /* Dividers — subtle */
+    hr {
+        border-color: #e5e5e5 !important;
+    }
+
+    /* Alert banner overrides */
+    .stAlert [data-testid="stNotificationContentWarning"] {
+        border-left-color: #ff6600 !important;
+    }
+    .stAlert [data-testid="stNotificationContentError"] {
+        border-left-color: #e60000 !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -128,16 +196,19 @@ LOGO_PATH = os.path.join(os.path.dirname(__file__), "assets", "logo.png")
 
 with st.sidebar:
     if os.path.exists(LOGO_PATH):
-        st.image(LOGO_PATH, width=180)
+        st.image(LOGO_PATH, width=200)
     else:
         st.markdown(
-            '<h2 style="background: linear-gradient(90deg, #D32F2F, #FF6F00); '
-            '-webkit-background-clip: text; -webkit-text-fill-color: transparent; '
-            'margin: 0;">🔥 TTS Guard</h2>',
+            '<h2 style="color: #012f5d; font-family: Roboto, sans-serif; '
+            'font-weight: 700; margin: 0;">TTS Guard</h2>',
             unsafe_allow_html=True,
         )
 
-    st.markdown("**Talent Technical Services**")
+    st.markdown(
+        '<p style="color: #777777; font-size: 0.85rem; margin-top: 2px;">'
+        "Talent Technical Services</p>",
+        unsafe_allow_html=True,
+    )
     st.markdown(f"📅 {date.today().strftime('%B %d, %Y')}")
     st.markdown("📍 Abu Dhabi, UAE")
 
@@ -184,14 +255,19 @@ with st.sidebar:
 # WELCOME PAGE
 # ---------------------------------------------------------------------------
 st.markdown(
-    '<h1 style="background: linear-gradient(90deg, #D32F2F, #FF6F00); '
-    '-webkit-background-clip: text; -webkit-text-fill-color: transparent; '
-    'margin-bottom: 0;">🔥 TTS Guard</h1>',
+    '<h1 style="background: linear-gradient(90deg, #012f5d, #ff6600); '
+    "-webkit-background-clip: text; -webkit-text-fill-color: transparent; "
+    'font-family: Roboto, sans-serif; font-weight: 700; '
+    'margin-bottom: 0;">TTS Guard</h1>',
     unsafe_allow_html=True,
 )
-st.markdown("### AMC Management Dashboard — Talent Technical Services")
 st.markdown(
-    '<p style="color: #666; font-size: 1.05rem; margin-top: -8px;">'
+    '<h3 style="color: #012f5d; font-family: Roboto, sans-serif; '
+    'font-weight: 500; margin-top: 0;">AMC Management Dashboard</h3>',
+    unsafe_allow_html=True,
+)
+st.markdown(
+    '<p style="color: #777777; font-size: 1.05rem; margin-top: -8px;">'
     "Centralized inspection tracking, compliance monitoring, and financial oversight "
     "for fire safety AMC contracts across Abu Dhabi.</p>",
     unsafe_allow_html=True,
